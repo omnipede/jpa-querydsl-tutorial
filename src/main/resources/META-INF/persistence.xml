@@ -1,0 +1,43 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+
+    <persistence-unit name="hello" transaction-type="RESOURCE_LOCAL">
+        <description>
+            Persistence unit for the JPA tutorial of the Hibernate Getting Started Guide
+        </description>
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <!-- Entity 정의 필요 -->
+        <class>io.omnipede.jpa.entity.Member</class>
+        <class>io.omnipede.jpa.entity.Team</class>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/springboot_development?serverTimezone=UTC" />
+            <property name="javax.persistence.jdbc.user" value="root" />
+            <property name="javax.persistence.jdbc.password" value="password" />
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.id.new_generator_mappings" value="true" />
+
+            <!-- DDL은 운영서버에서 그대로 사용하면 안된다 ... 개발 버전에서만 사용하기
+             create: 기존테이블 삭제 후 다시 생성
+             create-drop: create와 같으나 종료시점에 테이블 DROP
+             update: 변경분만 반영
+             validate: 엔티티와 테이블에 정상 매핑되어 있는지만 확인
+             none: 사용하지 않음 -->
+
+            <!--
+             개발 초기 단계는 create 또는 update
+             테스트 서버는 update 또는 validate
+             스테이징, 운영 서버는 validate 또는 none
+            -->
+            <property name="hibernate.hbm2ddl.auto" value="create" />
+        </properties>
+
+    </persistence-unit>
+
+</persistence>
